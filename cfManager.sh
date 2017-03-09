@@ -102,6 +102,22 @@ function bitbake_sdk () {
     __end_func ${func_name};
 }
 
+
+function install_toolchain() {
+
+   local func_name=${FUNCNAME[*]}; __ini_func ${func_name};
+
+   checkIfRoot
+
+   pushd ${TOOLCHAIN_DIR}
+
+   sh *toolchain*.sh
+   popd
+
+    __end_func ${func_name};
+}
+
+
 in_receipe=$2
 
 case "$1" in
@@ -113,6 +129,20 @@ case "$1" in
 	;;
     bitbake)
 	bitbake_sdk ${in_receipe}
+	;;
+    sdk_conf)
+	cat_file ${SDK_MACHINE_CONF_FILE}
+	;;
+    loc_conf)
+	cat_file ${local_machine_conf_file}
+	;;
+    diff_confs)
+	printf "<<<<< %s \n" "${SDK_MACHINE_CONF_FILE}"
+	printf ">>>>> %s \n" "${local_machine_conf_file}"
+	diff ${SDK_MACHINE_CONF_FILE} ${local_machine_conf_file}
+	;;
+    in_tc)
+	install_toolchain
 	;;
      *)
 
@@ -126,6 +156,10 @@ case "$1" in
 	echo "          sdk_to_loc          : cp sdk to local  >> ${MACHINE_CONF} << ">&2
 	echo "          loc_to_sdk          : cp local to sdk  >> ${MACHINE_CONF} << ">&2
 	echo "          bitbake   <receipe> : bitbake          >> ${MACHINE_CONF} << ">&2
+	echo "          sdk_conf            : show sdk         >> ${MACHINE_CONF} << ">&2
+	echo "          loc_conf            : show local       >>  ${local_machine_conf_file} << ">&2
+	echo "          diff_confs          : show difference between sdk and local ">&2
+	echo "          in_tc               : install Toolchain from ${TOOLCHAIN_DIR} << ">&2
 	echo "">&2 	
 	exit 0
 esac

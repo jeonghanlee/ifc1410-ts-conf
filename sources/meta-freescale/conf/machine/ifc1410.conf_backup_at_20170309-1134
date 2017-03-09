@@ -29,12 +29,13 @@ JFFS2_ERASEBLOCK = "0x10000"
 
 EXTRA_IMAGEDEPENDS += "fm-ucode rcw hypervisor hv-cfg"
 
-USE_VT ?= "0"
-
-
-
-BB_NUMBER_THREADS = "8"
-PARALLEL_MAKE ?= "-j 8"
+BB_NUMBER_THREADS = "6"
+PARALLEL_MAKE ?= "-j 6"
 
 CORE_IMAGE_EXTRA_INSTALL += "boost curl "
 EXTRA_IMAGE_FEATURES += "dev-pkgs "
+
+
+USE_VT ?= "0"
+
+

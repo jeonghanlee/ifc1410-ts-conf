@@ -254,3 +254,13 @@ function checkIfVar() {
     echo "${result}"	 
 }
 
+
+
+
+function cat_file () {
+    local func_name=${FUNCNAME[*]}; __ini_func ${func_name};
+    local file=$1
+
+    cat $file
+    __end_func ${func_name};
+}

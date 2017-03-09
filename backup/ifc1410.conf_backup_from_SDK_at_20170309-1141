@@ -36,5 +36,5 @@ USE_VT ?= "0"
 BB_NUMBER_THREADS = "8"
 PARALLEL_MAKE ?= "-j 8"
 
-CORE_IMAGE_EXTRA_INSTALL += "boost curl "
+CORE_IMAGE_EXTRA_INSTALL += "boost "
 EXTRA_IMAGE_FEATURES += "dev-pkgs "
