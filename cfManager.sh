@@ -38,7 +38,7 @@ set +a
 local_machine_conf_file=${SC_TOP}/sources/meta-freescale/conf/machine/${MACHINE_CONF}
 local_conf_backup_dir=${SC_TOP}/backup
 
-function cp_sdk_local() {
+function cp_sdk_to_local() {
     
     local func_name=${FUNCNAME[*]}; __ini_func ${func_name};
     local isFile=$(checkIfFile ${local_machine_conf_file})
