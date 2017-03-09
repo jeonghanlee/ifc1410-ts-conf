@@ -106,7 +106,7 @@ in_receipe=$2
 
 case "$1" in
     sdk_to_loc)
-	cp_sdk_to_loc
+	cp_sdk_to_local
 	;;
     loc_to_sdk)
 	cp_local_to_sdk
