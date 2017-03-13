@@ -19,7 +19,7 @@
 # Author : Jeong Han Lee
 # email  : jeonghan.lee@gmail.com
 # Date   : 
-# version : 0.0.1
+# version : 0.0.2
 #
 
 
@@ -103,6 +103,26 @@ function bitbake_sdk () {
 }
 
 
+function bitbake_sdk_ext () {
+    local func_name=${FUNCNAME[*]}; __ini_func ${func_name};
+    local receipe=$1
+
+    local isVar=$(checkIfVar ${receipe})
+    
+    if [[ $isVar -eq "$NON_EXIST" ]]; then
+	receipe=${DEFAULT_MACHINE_RECEIPE}
+    fi
+
+    pushd ${MACHINE_BUILD_DIR}
+
+    source SOURCE_THIS
+    printf "\n You are bitbaking with  %s ............\n\n" "${receipe}"
+    bitbake -c populate_sdk_ext $receipe
+    popd
+    __end_func ${func_name};
+}
+
+
 function install_toolchain() {
 
    local func_name=${FUNCNAME[*]}; __ini_func ${func_name};
@@ -127,9 +147,12 @@ case "$1" in
     loc_to_sdk)
 	cp_local_to_sdk
 	;;
-    bitbake)
+    bb_sdk)
 	bitbake_sdk ${in_receipe}
 	;;
+    # bb_sdk_ext)
+    # 	bitbake_sdk_ext ${in_receipe}
+    # 	;;
     sdk_conf)
 	cat_file ${SDK_MACHINE_CONF_FILE}
 	;;
@@ -155,7 +178,8 @@ case "$1" in
 	echo ""
 	echo "          sdk_to_loc          : cp sdk to local  >> ${MACHINE_CONF} << ">&2
 	echo "          loc_to_sdk          : cp local to sdk  >> ${MACHINE_CONF} << ">&2
-	echo "          bitbake   <receipe> : bitbake          >> ${MACHINE_CONF} << ">&2
+	echo "          bitbake   <receipe> : bitbake -c populate_sdk     >> ${MACHINE_CONF} << ">&2
+#	echo "          bitbake   <receipe> : bitbake -c populate_sdk_ext >> ${MACHINE_CONF} << ">&2
 	echo "          sdk_conf            : show sdk         >> ${MACHINE_CONF} << ">&2
 	echo "          loc_conf            : show local       >>  ${local_machine_conf_file} << ">&2
 	echo "          diff_confs          : show difference between sdk and local ">&2
