@@ -127,11 +127,11 @@ function install_toolchain() {
 
    local func_name=${FUNCNAME[*]}; __ini_func ${func_name};
 
-   checkIfRoot
+ #  checkIfRoot
 
    pushd ${TOOLCHAIN_DIR}
 
-   sh *toolchain*.sh
+   sudo -E sh *toolchain*.sh
    popd
 
     __end_func ${func_name};
@@ -178,7 +178,7 @@ case "$1" in
 	echo ""
 	echo "          sdk_to_loc          : cp sdk to local  >> ${MACHINE_CONF} << ">&2
 	echo "          loc_to_sdk          : cp local to sdk  >> ${MACHINE_CONF} << ">&2
-	echo "          bitbake   <receipe> : bitbake -c populate_sdk     >> ${MACHINE_CONF} << ">&2
+	echo "          bb_sdk    <receipe> : bitbake -c populate_sdk     >> ${MACHINE_CONF} << ">&2
 #	echo "          bitbake   <receipe> : bitbake -c populate_sdk_ext >> ${MACHINE_CONF} << ">&2
 	echo "          sdk_conf            : show sdk         >> ${MACHINE_CONF} << ">&2
 	echo "          loc_conf            : show local       >>  ${local_machine_conf_file} << ">&2
